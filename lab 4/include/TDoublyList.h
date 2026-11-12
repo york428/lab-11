@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <utility>
 #include <vector>
+#include <iostream> // <-- ДОБАВЛЕНО для std::cout в Print()
+
 template<typename T>
 class TDoublyList {
     struct TNode {
@@ -115,77 +117,67 @@ public:
         sz++;
     }
 
-    // ==========================================
-    // НОВЫЕ МЕТОДЫ УДАЛЕНИЯ
-    // ==========================================
-
-    // Удаление первого элемента
     void PopFront() {
         if (sz == 0) {
             throw std::out_of_range("List is empty");
         }
 
         TNode* pToDelete = pFirst;
-        pFirst = pFirst->pNext; // Сдвигаем указатель на первый
+        pFirst = pFirst->pNext;
 
         if (pFirst != nullptr) {
-            pFirst->pPrev = nullptr; // Обнуляем ссылку на удаленный узел
+            pFirst->pPrev = nullptr;
         }
         else {
-            pLast = nullptr; // Если список стал пустым, обнуляем и последний
+            pLast = nullptr;
         }
 
         delete pToDelete;
         sz--;
     }
 
-    // Удаление последнего элемента
     void PopBack() {
         if (sz == 0) {
             throw std::out_of_range("List is empty");
         }
 
         TNode* pToDelete = pLast;
-        pLast = pLast->pPrev; // Сдвигаем указатель на последний назад
+        pLast = pLast->pPrev;
 
         if (pLast != nullptr) {
-            pLast->pNext = nullptr; // Обнуляем ссылку на удаленный узел
+            pLast->pNext = nullptr;
         }
         else {
-            pFirst = nullptr; // Если список стал пустым
+            pFirst = nullptr;
         }
 
         delete pToDelete;
         sz--;
     }
 
-    // Удаление первого элемента по значению
     bool Remove(const T& value) {
         TNode* pCurrent = pFirst;
 
-        // Ищем нужный узел
         while (pCurrent != nullptr && pCurrent->value != value) {
             pCurrent = pCurrent->pNext;
         }
 
-        // Если не нашли
         if (pCurrent == nullptr) {
             return false;
         }
 
-        // Если нашли, перестраиваем связи
         if (pCurrent->pPrev != nullptr) {
             pCurrent->pPrev->pNext = pCurrent->pNext;
         }
         else {
-            pFirst = pCurrent->pNext; // Если удаляем самый первый
+            pFirst = pCurrent->pNext;
         }
 
         if (pCurrent->pNext != nullptr) {
             pCurrent->pNext->pPrev = pCurrent->pPrev;
         }
         else {
-            pLast = pCurrent->pPrev; // Если удаляем самый последний
+            pLast = pCurrent->pPrev;
         }
 
         delete pCurrent;
@@ -193,13 +185,11 @@ public:
         return true;
     }
 
-    // Удаление по индексу
     void Erase(size_t index) {
         if (index >= sz) {
             throw std::out_of_range("Index out of range");
         }
 
-        // Оптимизация: если индекс во второй половине, идем с конца
         TNode* pCurrent = nullptr;
         if (index < sz / 2) {
             pCurrent = pFirst;
@@ -214,7 +204,6 @@ public:
             }
         }
 
-        // Перестраиваем связи (та же логика, что и в Remove)
         if (pCurrent->pPrev != nullptr) {
             pCurrent->pPrev->pNext = pCurrent->pNext;
         }
@@ -233,6 +222,28 @@ public:
         sz--;
     }
 
+    // ==========================================
+    // ДОБАВЛЕННЫЕ МЕТОДЫ ДЛЯ РАБОТЫ ОЧЕРЕДИ
+    // ==========================================
+
+    T& Front() {
+        if (sz == 0) throw std::out_of_range("List is empty");
+        return pFirst->value;
+    }
+
+    T& Back() {
+        if (sz == 0) throw std::out_of_range("List is empty");
+        return pLast->value;
+    }
+
+    bool IsEmpty() const {
+        return sz == 0;
+    }
+
+    size_t Size() const {
+        return sz;
+    }
+
     // Для удобства проверки (вывод списка)
     void Print() const {
         TNode* p = pFirst;
@@ -243,3 +254,4 @@ public:
         std::cout << "nullptr\n";
     }
 };
+#endif // TDOUBLY_LIST_H
