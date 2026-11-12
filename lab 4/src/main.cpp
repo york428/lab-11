@@ -1,8 +1,16 @@
 #include <iostream>
 #include <stdexcept>
 #include "TDoublyQueue.h"
+#include <gtest/gtest.h>
+#include "TestTDoublyQueue.h" // Подключаем файл с вашими тестами
 
 int main() {
+    // Инициализация фреймворка Google Test
+    ::testing::InitGoogleTest(&argc, argv);
+
+    // Запуск всех тестов, которые найдены в подключенных заголовочных файлах
+    return RUN_ALL_TESTS();
+}
     // Устанавливаем локаль для корректного вывода русского текста в консоли Windows
     setlocale(LC_ALL, "Russian");
 
