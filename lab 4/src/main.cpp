@@ -1,6 +1,7 @@
 #include <iostream>
 #include "TDoublyQueue.h"       // Для ручного примера
 #include <gtest/gtest.h>
+#include "TestTDoublyList.h"
 #include "TestTDoublyQueue.h"   // Для запуска тестов
 
 // ==========================================
@@ -32,6 +33,7 @@ void RunSimpleExample() {
 // Точка входа
 // ==========================================
 int main(int argc, char** argv) {
+    setlocale(LC_ALL, "Russian");
     // 1. Сначала запускаем ручной пример
     RunSimpleExample();
 

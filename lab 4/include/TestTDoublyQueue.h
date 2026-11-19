@@ -1,10 +1,14 @@
 #ifndef TEST_TDOUBLY_QUEUE_H
 #define TEST_TDOUBLY_QUEUE_H
 
+
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <string>
+#include <vector>
+
 #include "TDoublyQueue.h"
+#include "TDoublyList.h"
 
 TEST(TDoublyQueueTest, BasicOperations) {
     TDoublyQueue<int> deque;
@@ -54,5 +58,6 @@ TEST(TDoublyQueueTest, CopyAndClear) {
     EXPECT_TRUE(deque1.IsEmpty());
     EXPECT_EQ(deque1.Size(), 0);
 }
+
 
 #endif // TEST_TDOUBLY_QUEUE_H
